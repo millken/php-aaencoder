@@ -41,7 +41,7 @@ class AAEncoder
             "(ﾟДﾟ) ['_'] ( (ﾟДﾟ) ['_'] (ﾟεﾟ+" .
             "/*´∇｀*/(ﾟДﾟ)[ﾟoﾟ]+ ";
 
-        for ($i = 0, $len = mb_strlen($js); $i < $len; $i++) {
+        for ($i = 0, $len = mb_strlen($js, 'UTF-8'); $i < $len; $i++) {
             $code = unpack('N', mb_convert_encoding(mb_substr($js, $i, 1, 'UTF-8'), 'UCS-4BE', 'UTF-8'))[1];
             $text = '(ﾟДﾟ)[ﾟεﾟ]+';
             if ($code <= 127) {
