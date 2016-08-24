@@ -53,8 +53,8 @@ class AAEncoder
             else {
                 $hex = str_split(substr('000' . dechex($code), -4));
                 $text .= "(oﾟｰﾟo)+ ";
-                for ($i = 0, $len = count($hex); $i < $len; $i++) {
-                    $text .= self::$bytes[hexdec($hex[$i])] . '+ ';
+                foreach ($hex as $digit) {
+                    $text .= self::$bytes[hexdec($digit)] . '+ ';
                 }
             }
             $result .=  $text;
