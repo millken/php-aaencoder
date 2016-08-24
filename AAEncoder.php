@@ -41,18 +41,18 @@ class AAEncoder
             "(ﾟДﾟ) ['_'] ( (ﾟДﾟ) ['_'] (ﾟεﾟ+" .
             "/*´∇｀*/(ﾟДﾟ)[ﾟoﾟ]+ ";
 
-        for ($i = 0, $len = mb_strlen($js, 'UTF-8'); $i < $len; $i++) {
+        for ($i = 0, $len = mb_strlen($js, 'UTF-8'); $i < $len; ++$i) {
             $code = unpack('N', mb_convert_encoding(mb_substr($js, $i, 1, 'UTF-8'), 'UCS-4BE', 'UTF-8'))[1];
             $text = '(ﾟДﾟ)[ﾟεﾟ]+';
-            if ($code <= 127) {
-                $text .= preg_replace_callback('/([0-7])/', function($match) use ($level) {
-                    $byte = intval($match[1]);
+            if ($code < 128) {
+                $text .= preg_replace_callback('/[0-7]/', function($match) use ($level) {
+                    $byte = intval($match[0]);
                     return ($level ? self::randomize($byte, $level) : self::$bytes[$byte]) . '+';
                 }, decoct($code));
             }
             else {
                 $hex = str_split(substr('000' . dechex($code), -4));
-                $text .= "(oﾟｰﾟo)+ ";
+                $text .= '(oﾟｰﾟo)+ ';
                 foreach ($hex as $digit) {
                     $text .= self::$bytes[hexdec($digit)] . '+ ';
                 }
@@ -103,7 +103,7 @@ class AAEncoder
             6 => [['+3', '+3'], ['+4', '+1', '+1'], ['+4', '+3', '-1']],
             7 => [['+3', '+4'], ['+3', '+3', '+1'], ['+4', '+4', '-1']],
         ];
-        while ($level--) {
+        while (--$level) {
             $byte = preg_replace_callback('/[0-7]/', function($match) use ($random) {
                 $numbers = $random[$match[0]][mt_rand(0, count($random[$match[0]]) - 1)];
                 shuffle($numbers);
