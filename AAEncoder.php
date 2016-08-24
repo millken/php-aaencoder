@@ -3,6 +3,7 @@
  * Class AAEncoder
  * @author Andrey Izman <izmanw@gmail.com>
  * @link https://github.com/mervick/php-aaencoder
+ * @origin http://utf-8.jp/public/aaencode.html
  * @license MIT
  */
 
